@@ -16,8 +16,8 @@ import android.widget.TextView;
  */
 public class Like extends Activity {
     ListView listView;
-    String [] titles={"标题1","标题2","标题3","标题4"};
-    String [] texts={"文本内容A","文本内容B","文本内容C","文本内容D"};
+    String [] titles={"title1","title2","title3","title4"};
+    String [] texts={"textA","textB","textC","textD"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,10 +55,8 @@ public class Like extends Activity {
             LayoutInflater inflater = (LayoutInflater)Like.this
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            // 使用View的对象itemView与R.layout.item关联
             View itemView = inflater.inflate(R.layout.listview_item, null);
 
-            // 通过findViewById()方法实例R.layout.item内各组件
             TextView title = (TextView)itemView.findViewById(R.id.title);
             title.setText(strTitle);
             TextView text = (TextView)itemView.findViewById(R.id.desc);

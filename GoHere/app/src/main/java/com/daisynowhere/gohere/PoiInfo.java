@@ -12,8 +12,8 @@ import java.lang.reflect.AccessibleObject;
 public class PoiInfo extends Activity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-       // this.setContentView(R.layout.poi_info);
-        SlidingMenu slidingMenu = new SlidingMenu(this, LayoutInflater.from(this).inflate(R.layout.poi_info,null),LayoutInflater.from(this).inflate(R.layout.activity_user_profile,null));
-        this.setContentView(slidingMenu);
+        this.setContentView(R.layout.poi_info);
+        //SlidingMenu slidingMenu = new SlidingMenu(this, LayoutInflater.from(this).inflate(R.layout.poi_info,null),LayoutInflater.from(this).inflate(R.layout.nav_header_user_profile,null));
+        //this.setContentView(slidingMenu);
     }
 }

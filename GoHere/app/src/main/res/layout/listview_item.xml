@@ -1,6 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-</LinearLayout>
+<RelativeLayout
+    android:layout_width="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="140dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:paddingBottom="4dip"
+    android:paddingLeft="12dip"
+    android:background="#9ed900">
+    <TextView
+        android:text="西湖"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_marginTop="80dp"
+        android:id="@+id/title"
+        android:textSize="20dip">
+    </TextView>
+    <TextView
+        android:text="西湖的水，我的泪T.T"
+        android:layout_height="wrap_content"
+        android:layout_width="280dp"
+        android:id="@+id/desc"
+        android:layout_below="@+id/title">
+    </TextView>
+    <View
+        android:layout_height="20dp"
+        android:layout_width="20dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/like"
+        android:background="@drawable/ic_menu_share"
+        android:layout_toRightOf="@+id/desc"
+        android:layout_below="@+id/title"
+        />
+    <View
+        android:layout_height="20dp"
+        android:layout_width="20dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/togo"
+        android:background="@drawable/ic_menu_share"
+        android:layout_toRightOf="@+id/like"
+        android:layout_below="@+id/title"
+        />
+    <View
+        android:layout_height="20dp"
+        android:layout_width="20dp"
+        android:id="@+id/share"
+        android:background="@drawable/ic_menu_share"
+        android:layout_toRightOf="@+id/togo"
+        android:layout_below="@+id/title"
+        />
+</RelativeLayout>

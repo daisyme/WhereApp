@@ -1,6 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-</LinearLayout>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="#9879af"
+        android:id="@+id/bg"/>
+    <Button
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:layout_alignBottom="@+id/textView"
+        android:layout_alignRight="@+id/title"
+        android:layout_alignEnd="@+id/title"
+        android:background="#ccc"
+        android:text="签 到"
+        android:textColor="#777"
+        android:textSize="26dp"/>
+    <!--签到，可以变成下拉选择评价+想不想去等属性-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/title"
+        android:layout_alignBottom="@+id/bg"
+        android:layout_margin="20dp"
+        android:text="紫金港"
+        android:textSize="30dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bg"
+        android:layout_margin="20dp"
+        android:text="紫金港是刷夜的好地方"
+        android:textSize="20dp"
+        android:id="@+id/textView" />
+    <!--查看地图，位置信息，用户评分，类别，还未去过|已经去过|次数-->
+</RelativeLayout>

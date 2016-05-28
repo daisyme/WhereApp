@@ -1,13 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 21
+    compileSdkVersion 22
     buildToolsVersion "22.0.0"
+    android {compileOptions.encoding = "UTF-8"}
 
     defaultConfig {
         applicationId "com.daisynowhere.gohere"
         minSdkVersion 14
-        targetSdkVersion 21
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
     }
@@ -22,6 +23,20 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:21.+'
-    compile 'com.google.android.gms:play-services:4.2.42'
+    //compile 'com.android.support:appcompat-v7:23.2.0'
+    //compile 'com.android.support:design:23.2.0'
+    compile 'com.android.support:appcompat-v7:22.2.1'
+    compile 'com.android.support:design:22.2.0'
+    compile 'de.hdodenhof:circleimageview:2.0.0'
+    compile 'com.github.ybq:Android-SpinKit:1.0.2'
+    compile 'com.android.support:support-v4:22.2.0'
+    compile 'com.android.support:recyclerview-v7:22.+'
+    compile 'com.android.support:cardview-v7:22.+'
+    compile 'de.hdodenhof:circleimageview:2.0.0'
+    compile files('libs/baidumapapi_base_v3_7_3.jar')
+    compile files('libs/IndoorscapeAlbumPlugin.jar')
+    compile files('libs/baidumapapi_map_v3_7_3.jar')
+    compile files('libs/baidumapapi_search_v3_7_3.jar')
+    compile files('libs/baidumapapi_util_v3_7_3.jar')
+    compile files('libs/locSDK_6.13.jar')
 }

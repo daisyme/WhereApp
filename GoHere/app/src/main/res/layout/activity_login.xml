@@ -17,31 +17,65 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <LinearLayout
             android:id="@+id/email_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/profile_image"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:paddingTop="@dimen/nav_header_vertical_spacing"
+                android:src="@drawable/android"
+                app:civ_border_width="2dp"
+                app:civ_border_color="#f0f"
+                android:layout_gravity="center_horizontal" />
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="130px"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="94px"
+                    android:background="@drawable/shape_edit_stroke"
+                    android:orientation="horizontal" >
 
-            <AutoCompleteTextView
-                android:id="@+id/email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/prompt_email"
-                android:inputType="textEmailAddress"
-                android:maxLines="1"
-                android:singleLine="true"/>
+                    <ImageView
+                        android:layout_width="57px"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="40px"
+                        android:text="设置密码" />
+
+                    <View
+                        android:layout_width="0.5px"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="40px"
+                        android:background="@color/line" />
+
+                    <EditText
+                        android:id="@+id/email"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="13px"
+                        android:background="@null"
+                        android:hint="Username"
+                        android:singleLine="true"
+                        android:textColor="@color/textcolor"
+                        android:textSize="40px" />
+                </LinearLayout>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -49,29 +83,72 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/prompt_password"
-                android:imeActionId="@+id/login"
-                android:imeActionLabel="@string/action_sign_in_short"
-                android:imeOptions="actionUnspecified"
-                android:inputType="textPassword"
-                android:maxLines="1"
-                android:singleLine="true"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="130px"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="94px"
+                    android:background="@drawable/shape_edit_stroke"
+                    android:orientation="horizontal" >
+
+                    <ImageView
+                        android:layout_width="57px"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="40px"
+                        android:text="设置密码" />
+
+                    <View
+                        android:layout_width="0.5px"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="40px"
+                        android:background="@color/line" />
+
+                    <EditText
+                        android:id="@+id/password"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="13px"
+                        android:background="@null"
+                        android:inputType="textPassword"
+                        android:hint="Password"
+                        android:singleLine="true"
+                        android:textColor="@color/textcolor"
+                        android:textSize="40px" />
+                </LinearLayout>
 
             </android.support.design.widget.TextInputLayout>
-
             <Button
                 android:id="@+id/email_sign_in_button"
-                style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_height="132px"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="82px"
+                android:background="#6a6"
+                android:clickable="true"
+                android:gravity="center"
                 android:text="@string/action_sign_in"
-                android:textStyle="bold"/>
+                android:textColor="@android:color/white"
+                android:textSize="49px" />
+
+            <Button
+                android:id="@+id/sign_up"
+                android:layout_width="match_parent"
+                android:layout_height="132px"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="82px"
+                android:background="#66a"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="@string/action_sign_up"
+                android:textColor="@android:color/white"
+                android:textSize="49px" />
 
         </LinearLayout>
     </ScrollView>
+
+
 </LinearLayout>
+
+

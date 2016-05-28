@@ -2,5 +2,225 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/nav_header_height"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:background="#66a"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/avatar"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:paddingTop="@dimen/nav_header_vertical_spacing"
+            android:src="@drawable/android"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#fff"
+            android:layout_gravity="center_horizontal" />
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/nav_header_vertical_spacing"
+            android:text="daisynowhere"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="daisylivinghere@gmail.com"
+            android:layout_gravity="center_horizontal" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="130px"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20px"
+            android:background="@drawable/shape_edit_stroke"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="@dimen/attr"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="40px"
+                android:text="Gender"
+                android:textSize="20dp"
+                android:gravity="center_vertical" />
+
+            <View
+                android:layout_width="0.5px"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="40px"
+                android:background="@color/line" />
+
+            <TextView
+                android:id="@+id/user_gender"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="13px"
+                android:background="@null"
+                android:text="Female"
+                android:singleLine="true"
+                android:textColor="@color/text"
+                android:textSize="20dp"
+                android:gravity="center_vertical" />
+        </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="130px"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20px"
+        android:background="@drawable/shape_edit_stroke"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="@dimen/attr"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="40px"
+            android:text="Birth"
+            android:textSize="20dp"
+            android:gravity="center_vertical" />
+
+        <View
+            android:layout_width="0.5px"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="40px"
+            android:background="@color/line" />
+
+        <TextView
+            android:id="@+id/user_birth"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="13px"
+            android:background="@null"
+            android:text="1994/10/27"
+            android:singleLine="true"
+            android:textColor="@color/text"
+            android:textSize="20dp"
+            android:gravity="center_vertical" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="130px"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20px"
+        android:background="@drawable/shape_edit_stroke"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="@dimen/attr"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="40px"
+            android:text="Province"
+            android:textSize="20dp"
+            android:gravity="center_vertical" />
+
+        <View
+            android:layout_width="0.5px"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="40px"
+            android:background="@color/line" />
+
+        <TextView
+            android:id="@+id/user_province"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="13px"
+            android:background="@null"
+            android:text="Zhejiang"
+            android:singleLine="true"
+            android:textColor="@color/text"
+            android:textSize="20dp"
+            android:gravity="center_vertical" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="130px"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20px"
+        android:background="@drawable/shape_edit_stroke"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="@dimen/attr"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="40px"
+            android:text="City"
+            android:textSize="20dp"
+            android:gravity="center_vertical" />
+
+        <View
+            android:layout_width="0.5px"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="40px"
+            android:background="@color/line" />
+
+        <TextView
+            android:id="@+id/user_city"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="13px"
+            android:background="@null"
+            android:text="Hangzhou"
+            android:singleLine="true"
+            android:textColor="@color/text"
+            android:textSize="20dp"
+            android:gravity="center_vertical" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="130px"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20px"
+        android:background="@drawable/shape_edit_stroke"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="@dimen/attr"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="40px"
+            android:text="Mood"
+            android:textSize="20dp"
+            android:gravity="center_vertical" />
+
+        <View
+            android:layout_width="0.5px"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="40px"
+            android:background="@color/line" />
+
+        <TextView
+            android:id="@+id/user_desc"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="13px"
+            android:background="@null"
+            android:text="Happy Every Day"
+            android:singleLine="true"
+            android:textColor="@color/text"
+            android:textSize="20dp"
+            android:gravity="center_vertical" />
+    </LinearLayout>
+    <Button
+        android:id="@+id/user_edit"
+        android:layout_width="match_parent"
+        android:layout_height="132px"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="82px"
+        android:background="#7bb"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="Edit"
+        android:textColor="@android:color/white"
+        android:textSize="49px" />
 
 </LinearLayout>
