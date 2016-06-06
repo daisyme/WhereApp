@@ -8,43 +8,52 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2016/5/24.
  */
 public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapter.ViewHolder> {
     private Context mContext;
-    private String [] itemTiteles,itemTexts;
+    private List<String> itemTiteles,itemTexts;
+    private List<Integer> itemPids;
+    private int uid;
 
-    public RecyclerListAdapter(Context mContext,String [] itemTitles, String [] itemTexts) {
+    public RecyclerListAdapter(Context mContext,List<String> itemTitles, List<String> itemTexts, List<Integer> pids, int id) {
         this.mContext = mContext;
-        this.itemTexts = new String[itemTexts.length];
-        this.itemTiteles = new String[itemTitles.length];
         this.itemTiteles=itemTitles;
         this.itemTexts=itemTexts;
+        this.itemPids=pids;
+        this.uid = id;
     }
 
     @Override
-    public RecyclerListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = (View) LayoutInflater.from(parent.getContext()).inflate(R.layout.listview_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerListAdapter.ViewHolder holder, int position) {
-        holder.Titel.setText(itemTiteles[position]);
-        holder.Text.setText(itemTexts[position]);
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        final int p = position;
+        holder.Titel.setText(itemTiteles.get(position));
+        holder.Text.setText(itemTexts.get(position));
 
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mContext.startActivity(new Intent(mContext, PoiInfo.class));
+                Intent intent = new Intent();
+                intent.setAction("PoiInfo");
+                intent.putExtra("pid", itemPids.get(p));
+                intent.putExtra("uid",uid);
+                mContext.startActivity(intent);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return itemTexts == null ? 0 : itemTexts.length;
+        return itemTexts == null ? 0 : itemTexts.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

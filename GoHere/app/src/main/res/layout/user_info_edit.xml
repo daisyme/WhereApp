@@ -11,29 +11,37 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        android:background="#66a"
+        android:background="#36B1DA"
         android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/avatar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
             android:paddingTop="@dimen/nav_header_vertical_spacing"
-            android:src="@android:drawable/sym_def_app_icon" />
+            android:src="@drawable/android"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#fff"
+            android:layout_gravity="center_horizontal" />
 
         <TextView
             android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:paddingTop="@dimen/nav_header_vertical_spacing"
             android:text="daisynowhere"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:gravity="center_vertical|center_horizontal" />
 
         <TextView
             android:id="@+id/email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="daisylivinghere@gmail.com" />
+            android:text="daisylivinghere@gmail.com"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_gravity="center" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

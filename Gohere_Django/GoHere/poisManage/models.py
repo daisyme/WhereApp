@@ -6,7 +6,7 @@ from django.db import models
 # Create your models here.
 
 class POI(models.Model):
-    pid = models.BigIntegerField(primary_key=True)
+    pid = models.CharField(primary_key=True, max_length=30)
     name = models.CharField(max_length=100)
     category = models.CharField(max_length=20)
     lat = models.CharField(max_length=30)
@@ -19,3 +19,7 @@ class POI(models.Model):
     likeNum = models.IntegerField(default=0)
     def __unicode__ (self):
         return self.name
+
+class Cat(models.Model):
+    pid = models.ForeignKey(POI)
+    cat = models.IntegerField(default=0)

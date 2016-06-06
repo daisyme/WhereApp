@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,31 +13,115 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 /**
  * Created by Administrator on 2016/5/24.
  */
 public class ToGo extends Activity {
     ListView listView;
-    String [] titles={"±êÌâ1","±êÌâ2","±êÌâ3","±êÌâ4"};
-    String [] texts={"ÎÄ±¾ÄÚÈÝA","ÎÄ±¾ÄÚÈÝB","ÎÄ±¾ÄÚÈÝC","ÎÄ±¾ÄÚÈÝD"};
+    String [] titles={"ï¿½ï¿½ï¿½ï¿½1","ï¿½ï¿½ï¿½ï¿½2","ï¿½ï¿½ï¿½ï¿½3","ï¿½ï¿½ï¿½ï¿½4"};
+    String [] texts={"ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½A","ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½B","ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½C","ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½D"};
+    Integer [] pids={1,1,1,1};
+    private int id;
+    String baseurl = "http://10.0.2.2:8000/";
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 0){
+                try{
+                    JSONArray jsonArray = new JSONArray((String)msg.obj);
+                    titles = new String[jsonArray.length()];
+                    texts = new String[jsonArray.length()];
+                    pids = new Integer[jsonArray.length()];
+                    for (int i=0;i<jsonArray.length();i++){
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        String title = new Integer(jsonObject.getInt("pid")).toString();
+                        String text = jsonObject.get("pid").toString();
+                        int pid = jsonObject.getInt("pid");
+                        titles[i] = title;
+                        texts[i] = text;
+                        pids[i] = pid;
+                    }
+                    listView.setAdapter(new ListViewAdapter(titles,texts,pids));
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listview);
         this.setTitle("BaseAdapter for ListView");
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        id = bundle.getInt("id");
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    URL url = new URL(baseurl+"todo/"+id);
+                    HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                    httpURLConnection.setRequestMethod("GET");
+                    httpURLConnection.connect();
+                    int resultcode = httpURLConnection.getResponseCode();
+                    if (resultcode == HttpURLConnection.HTTP_OK) {
+                        InputStream is = httpURLConnection.getInputStream();
+                        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½
+                        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                        //ï¿½ï¿½ï¿½ï¿½Stringï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú´ï¿½ï¿½æµ¥ï¿½ï¿½ï¿½ï¿½ï¿½
+                        String line = null;
+                        //ï¿½ï¿½ï¿½ï¿½StringBufferï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú´æ´¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+                        StringBuffer sb = new StringBuffer();
+                        while ((line = br.readLine()) != null) {
+                            sb.append(line);
+                        }
+                        Message message = new Message();
+                        message.what = 0;
+                        message.obj = sb.toString();
+                        handler.sendMessage(message);
+                    }else{
+                        Message message = new Message();
+                        message.what = -1;
+                        handler.sendMessage(message);
+                    }
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+//        try{
+//            thread.join();
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+
         listView=(ListView)this.findViewById(R.id.MyListView);
-        listView.setAdapter(new ListViewAdapter(titles,texts));
+        //listView.setAdapter(new ListViewAdapter(titles,texts,pids));
     }
 
     public class ListViewAdapter extends BaseAdapter {
         View[] itemViews;
 
-        public ListViewAdapter(String [] itemTitles, String [] itemTexts){
+        public ListViewAdapter(String [] itemTitles, String [] itemTexts, Integer [] itempids){
             itemViews = new View[itemTitles.length];
 
             for (int i=0; i<itemViews.length; ++i){
-                itemViews[i] = makeItemView(itemTitles[i], itemTexts[i]);
+                itemViews[i] = makeItemView(itemTitles[i], itemTexts[i], itempids[i]);
             }
         }
 
@@ -51,23 +137,26 @@ public class ToGo extends Activity {
             return position;
         }
 
-        private View makeItemView(String strTitle, String strText) {
+        private View makeItemView(String strTitle, String strText, Integer pid) {
             LayoutInflater inflater = (LayoutInflater)ToGo.this
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            // Ê¹ÓÃViewµÄ¶ÔÏóitemViewÓëR.layout.item¹ØÁª
+            // Ê¹ï¿½ï¿½Viewï¿½Ä¶ï¿½ï¿½ï¿½itemViewï¿½ï¿½R.layout.itemï¿½ï¿½ï¿½ï¿½
             View itemView = inflater.inflate(R.layout.listview_item, null);
 
-            // Í¨¹ýfindViewById()·½·¨ÊµÀýR.layout.itemÄÚ¸÷×é¼þ
+            // Í¨ï¿½ï¿½findViewById()ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½R.layout.itemï¿½Ú¸ï¿½ï¿½ï¿½ï¿½
             TextView title = (TextView)itemView.findViewById(R.id.title);
             title.setText(strTitle);
             TextView text = (TextView)itemView.findViewById(R.id.desc);
             text.setText(strText);
+            final int p = pid;
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent();
-                    intent.setClass(ToGo.this,PoiInfo.class);
+                    intent.setAction("PoiInfo");
+                    intent.putExtra("pid",p);
+                    intent.putExtra("uid", id);
                     startActivity(intent);
                 }
             });

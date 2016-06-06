@@ -24,29 +24,29 @@
         android:id="@+id/desc"
         android:layout_below="@+id/title">
     </TextView>
-    <View
+    <ImageButton
         android:layout_height="20dp"
         android:layout_width="20dp"
         android:layout_marginRight="10dp"
         android:id="@+id/like"
-        android:background="@drawable/ic_menu_share"
+        android:background="@drawable/islike"
         android:layout_toRightOf="@+id/desc"
         android:layout_below="@+id/title"
         />
-    <View
+    <ImageButton
         android:layout_height="20dp"
         android:layout_width="20dp"
         android:layout_marginRight="10dp"
         android:id="@+id/togo"
-        android:background="@drawable/ic_menu_share"
+        android:background="@drawable/istogo"
         android:layout_toRightOf="@+id/like"
         android:layout_below="@+id/title"
         />
-    <View
+    <ImageButton
         android:layout_height="20dp"
         android:layout_width="20dp"
         android:id="@+id/share"
-        android:background="@drawable/ic_menu_share"
+        android:background="@drawable/check"
         android:layout_toRightOf="@+id/togo"
         android:layout_below="@+id/title"
         />

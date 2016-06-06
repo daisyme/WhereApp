@@ -7,7 +7,7 @@ from poisManage.models import POI
 # Create your models here.
 
 class data_user(models.Model):
-    id = models.BigIntegerField(primary_key=True)
+    uid = models.BigIntegerField(primary_key=True)
     username = models.CharField(max_length=50)
     city = models.IntegerField(default=0, blank=True)
     province = models.IntegerField(default=0, blank=True)
@@ -16,16 +16,16 @@ class data_user(models.Model):
 
 
 class Check(models.Model):
-    uid = models.ForeignKey('data_user')
+    uid = models.ForeignKey(data_user)
     pid = models.ForeignKey(POI)
     time = models.DateTimeField(auto_now_add=True)
     def __unicode__(self):
         return self.time
 
 class Like(models.Model):
-    uid = models.ForeignKey('data_user')
+    uid = models.ForeignKey(data_user)
     pid = models.ForeignKey(POI)
 
 class Todo(models.Model):
-    uid = models.ForeignKey('data_user')
+    uid = models.ForeignKey(data_user)
     pid = models.ForeignKey(POI)

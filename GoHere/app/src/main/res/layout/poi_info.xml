@@ -6,23 +6,13 @@
         android:layout_height="200dp"
         android:background="#9879af"
         android:id="@+id/bg"/>
-    <Button
-        android:layout_width="120dp"
-        android:layout_height="60dp"
-        android:layout_alignBottom="@+id/textView"
-        android:layout_alignRight="@+id/title"
-        android:layout_alignEnd="@+id/title"
-        android:background="#ccc"
-        android:text="签 到"
-        android:textColor="#777"
-        android:textSize="26dp"/>
-    <!--签到，可以变成下拉选择评价+想不想去等属性-->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/title"
-        android:layout_alignBottom="@+id/bg"
-        android:layout_margin="20dp"
+        android:layout_alignTop="@+id/bg"
+        android:layout_marginTop="120dp"
+        android:layout_marginLeft="20dp"
         android:text="紫金港"
         android:textSize="30dp"/>
     <TextView
@@ -33,5 +23,33 @@
         android:text="紫金港是刷夜的好地方"
         android:textSize="20dp"
         android:id="@+id/textView" />
+
+    <ImageButton
+        android:layout_height="20dp"
+        android:layout_width="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="-120dp"
+        android:id="@+id/like"
+        android:background="@drawable/islike"
+        android:layout_toRightOf="@id/title"
+        android:layout_below="@+id/title"
+        />
+    <ImageButton
+        android:layout_height="20dp"
+        android:layout_width="20dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/togo"
+        android:background="@drawable/istogo"
+        android:layout_toRightOf="@+id/like"
+        android:layout_below="@+id/title"
+        />
+    <ImageButton
+        android:layout_height="20dp"
+        android:layout_width="20dp"
+        android:id="@+id/check"
+        android:background="@drawable/check"
+        android:layout_toRightOf="@+id/togo"
+        android:layout_below="@+id/title"
+        />
     <!--查看地图，位置信息，用户评分，类别，还未去过|已经去过|次数-->
 </RelativeLayout>

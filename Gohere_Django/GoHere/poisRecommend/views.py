@@ -16,8 +16,10 @@ from rest_framework.parsers import JSONParser
 
 from .serializers import CheckSerializer, d_userSerializer, LikeSerializer, TodoSerializer
 from .models import Check, data_user, Like, Todo
+from utils.algorithm import rec_poi
 from userManage.models import MyUser
 from poisManage.models import POI
+from poisManage.serializers import POIInfo
 
 import simplejson
 
@@ -63,7 +65,7 @@ def user_history(request, pk):
     if request.method == 'GET':
         check = Check.objects.filter(uid=user.id)
         user_his = CheckSerializer(check, many=True)
-        return JSONResponse(user_his.data)
+        return JSONResponse(user_his.data, status=status.HTTP_200_OK)
     elif request.method == 'PUT':
         req=simplejson.loads(request.body)
         try:
@@ -85,7 +87,7 @@ def user_history(request, pk):
         dict = {}
         dict["checkinUser"] = poi.checkinUserNum
         dict["checkin"] = poi.checkinNum
-        return JSONResponse(dict)
+        return JSONResponse(dict, status=status.HTTP_200_OK)
 
 
 # 展示或更新喜欢去的地点
@@ -100,7 +102,7 @@ def user_like(request, pk):
     if request.method == 'GET':
         like = Like.objects.filter(uid=user.id)
         user_like = LikeSerializer(user, many=True)
-        return JSONResponse(user_like.data)
+        return JSONResponse(user_like.data, status=status.HTTP_200_OK)
     elif request.method == 'PUT':
         req=simplejson.loads(request.body)
         try:
@@ -126,7 +128,7 @@ def user_like(request, pk):
         dict = {}
         dict["poi_like"] = poi.likeNum
         dict["user_like"] = myuser.likeNum
-        return JSONResponse(dict)
+        return JSONResponse(dict, status=status.HTTP_200_OK)
 
 # 展示或更新想去的地点
 @api_view(['GET', 'PUT'])
@@ -140,7 +142,7 @@ def user_todo(request, pk):
     if request.method == 'GET':
         todo = Todo.objects.filter(uid=user.id)
         user_todo = TodoSerializer(todo, many=True)
-        return JSONResponse(user_todo.data)
+        return JSONResponse(user_todo.data, status=status.HTTP_200_OK)
     elif request.method == 'PUT':
         req=simplejson.loads(request.body)
         try:
@@ -166,4 +168,26 @@ def user_todo(request, pk):
         dict = {}
         dict["poi_todo"] = poi.todoNum
         dict["user_todo"] = myuser.todoNum
-        return JSONResponse(dict)
+        return JSONResponse(dict, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+def recommend(request, pk):
+    try:
+        user = data_user.objects.get(pk=pk)
+    except data_user.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    req=simplejson.loads(request.body)
+    lat=req['lat']
+    lon=req['lon']
+    radius=req['radius']
+
+    rec = rec_poi(user, lat, lon, radius)
+
+    poi = POI.objects.filter(pk=0)
+    for i in rec:
+        poi = POI.objects.filter(pk = i[0]) | poi
+    poi_rec = POIInfo(poi, many=True)
+    return JSONResponse(poi_rec.data, status=status.HTTP_200_OK)
+

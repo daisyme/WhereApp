@@ -47,4 +47,4 @@ def POI_detail(request, pk):
 
     if request.method == 'GET':
         poi_info = POISerializer(poi)
-        return JSONResponse(poi_info.data)
+        return JSONResponse(poi_info.data, status=status.HTTP_200_OK)

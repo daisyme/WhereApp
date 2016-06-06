@@ -37,7 +37,7 @@ public class LoginActivity extends Activity {
             if (msg.what == 0){
                 try{
                     JSONObject data = new JSONObject((String)msg.obj);
-                    gogogo(data.getInt("id"));
+                    gogogo(data.getInt("id"), data.getString("email"));
                 }
                 catch (Exception e){
                     e.printStackTrace();
@@ -48,12 +48,14 @@ public class LoginActivity extends Activity {
         }
     };
 
-    private void gogogo(int id){
+    private void gogogo(int id, String email){
         Toast.makeText(getApplicationContext(), "Login Success!", Toast.LENGTH_LONG).show();
         Intent intent = new Intent();
 //        intent.setClass(LoginActivity.this,MainActivity.class);
         intent.setAction("Main");
         intent.putExtra("id",id);
+        intent.putExtra("username",usertext.getText().toString());
+        intent.putExtra("email",email);
         startActivity(intent);
     }
 
@@ -121,7 +123,7 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_login);
 
-        usertext = (EditText) this.findViewById(R.id.email);
+        usertext = (EditText) this.findViewById(R.id.username);
         pswtext = (EditText) this.findViewById(R.id.password);
 
         login = (Button) this.findViewById(R.id.email_sign_in_button);

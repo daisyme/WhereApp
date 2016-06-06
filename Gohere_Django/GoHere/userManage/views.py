@@ -80,7 +80,7 @@ def user_list(request):
         if request.method == 'GET':
             users = MyUser.objects.all()
             user = UserSerializer(users, many=True)
-            return JSONResponse(user.data)
+            return JSONResponse(user.data, status=status.HTTP_200_OK)
 
         elif request.method == 'POST':
             req=simplejson.loads(request.body)
@@ -89,11 +89,11 @@ def user_list(request):
             password = req['password']
             b = MyUser.objects.filter(username=username)
             if(len(b) != 0):
-                return HttpResponse("用户名已存在！")
+                return HttpResponse(status=status.HTTP_409_CONFLICT)
             new_user = MyUser.objects.create_user(username,email,password)
             id = new_user.id
             d_user =  data_user.objects.create(id=id,username=username)
-            return HttpResponse("创建成功")
+            return JSONResponse(status=status.HTTP_201_CREATED)
 
 # 登录
 @api_view(['POST'])
@@ -110,15 +110,17 @@ def user_login(request):
                 dict["avatar"]=unicode(user.avatar)
                 dict["email"]=user.email
                 dict["id"]=user.id
-                return JSONResponse(dict)
+                return JSONResponse(dict, status=status.HTTP_200_OK)
             else:
-                return HttpResponse("用户被冻结啦！快求我！")
+                #账号被冻结
+                return HttpResponse(status=status.HTTP_403_FORBIDDEN)
         else:
-            return HttpResponse("用户名或者密码不正确！")
+            #密码错误
+            return HttpResponse(status=status.HTTP_406_NOT_ACCEPTABLE) 
 
 
 #登出
 @api_view(['POST','GET'])
 def user_logout(request):
     logout(request)
-    return HttpResponse("客官拜拜啦您~")
+    return HttpResponse(status=status.HTTP_200_OK)

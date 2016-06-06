@@ -19,8 +19,6 @@ class MyUser(AbstractUser):
     likeNum = models.IntegerField(default=0)
     todoNum = models.IntegerField(default=0)
     doneNum = models.IntegerField(default=0)
-
-    objects = UserManager()
     
     def __unicode__(self):
         return unicode(self.username)
