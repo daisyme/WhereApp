@@ -4,7 +4,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/basic"
-            android:icon="@drawable/User"
+            android:icon="@drawable/user"
             android:title="User Profile" />
         <item
             android:id="@+id/history"

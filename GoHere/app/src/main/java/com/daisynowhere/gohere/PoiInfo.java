@@ -35,7 +35,8 @@ public class PoiInfo extends AppCompatActivity {
     //Button back;
     TextView title,desc;
     ImageButton check,like,togo;
-    private int uid,pid;
+    private int uid;
+    private String pid;
     String baseurl = "http://10.0.2.2:8000/";
     Handler handler = new Handler(){
         @Override
@@ -44,8 +45,8 @@ public class PoiInfo extends AppCompatActivity {
             if (msg.what == 0){
                 try{
                     JSONObject jsonObject = new JSONObject((String)msg.obj);
-                    title.setText(jsonObject.getString("name"));
-                    desc.setText(jsonObject.getString("desc"));
+                    title.setText(jsonObject.getString("poi_name"));
+                    desc.setText(jsonObject.getString("address"));
                 }
                 catch (Exception e){
                     e.printStackTrace();
@@ -67,7 +68,7 @@ public class PoiInfo extends AppCompatActivity {
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        pid = bundle.getInt("pid");
+        pid = bundle.getString("pid");
         uid = bundle.getInt("uid");
 
         //back = (Button) this.findViewById(R.id.back);
@@ -76,11 +77,11 @@ public class PoiInfo extends AppCompatActivity {
         check = (ImageButton) this.findViewById(R.id.check);
         like = (ImageButton) this.findViewById(R.id.like);
         togo = (ImageButton) this.findViewById(R.id.togo);
-        Toolbar toolbar = (Toolbar) this.findViewById(R.id.tool_bar);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeAsUpIndicator(android.R.drawable.ic_input_delete);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+//        Toolbar toolbar = (Toolbar) this.findViewById(R.id.tool_bar);
+//        setSupportActionBar(toolbar);
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.setHomeAsUpIndicator(android.R.drawable.ic_input_delete);
+//        actionBar.setDisplayHomeAsUpEnabled(true);
 //
 //        CollapsingToolbarLayout collapsingToolbar =
 //                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
@@ -90,10 +91,18 @@ public class PoiInfo extends AppCompatActivity {
             @Override
             public void run() {
                 try{
-                    URL url = new URL(baseurl+"poi/"+pid);
+                    URL url = new URL(baseurl+"poi_info/"+uid);
                     HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
-                    httpURLConnection.setRequestMethod("GET");
+                    httpURLConnection.setDoOutput(true);
+                    httpURLConnection.setDoInput(true);
+                    httpURLConnection.setRequestMethod("POST");
+                    JSONObject params = new JSONObject();
+                    params.put("pid", pid);
                     httpURLConnection.connect();
+                    DataOutputStream dataOutputStream = new DataOutputStream(httpURLConnection.getOutputStream());
+                    dataOutputStream.writeBytes(params.toString());
+                    dataOutputStream.flush();
+                    dataOutputStream.close();
                     int resultcode = httpURLConnection.getResponseCode();
                     if (resultcode == HttpURLConnection.HTTP_OK) {
                         InputStream is = httpURLConnection.getInputStream();

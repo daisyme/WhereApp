@@ -29,7 +29,7 @@ public class ToGo extends Activity {
     ListView listView;
     String [] titles={"����1","����2","����3","����4"};
     String [] texts={"�ı�����A","�ı�����B","�ı�����C","�ı�����D"};
-    Integer [] pids={1,1,1,1};
+    String [] pids;
     private int id;
     String baseurl = "http://10.0.2.2:8000/";
     Handler handler = new Handler(){
@@ -41,12 +41,12 @@ public class ToGo extends Activity {
                     JSONArray jsonArray = new JSONArray((String)msg.obj);
                     titles = new String[jsonArray.length()];
                     texts = new String[jsonArray.length()];
-                    pids = new Integer[jsonArray.length()];
+                    pids = new String[jsonArray.length()];
                     for (int i=0;i<jsonArray.length();i++){
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        String title = new Integer(jsonObject.getInt("pid")).toString();
-                        String text = jsonObject.get("pid").toString();
-                        int pid = jsonObject.getInt("pid");
+                        String title = jsonObject.getString("name");
+                        String text = jsonObject.getString("address");
+                        String pid = jsonObject.getString("pid");
                         titles[i] = title;
                         texts[i] = text;
                         pids[i] = pid;
@@ -117,7 +117,7 @@ public class ToGo extends Activity {
     public class ListViewAdapter extends BaseAdapter {
         View[] itemViews;
 
-        public ListViewAdapter(String [] itemTitles, String [] itemTexts, Integer [] itempids){
+        public ListViewAdapter(String [] itemTitles, String [] itemTexts, String [] itempids){
             itemViews = new View[itemTitles.length];
 
             for (int i=0; i<itemViews.length; ++i){
@@ -137,7 +137,7 @@ public class ToGo extends Activity {
             return position;
         }
 
-        private View makeItemView(String strTitle, String strText, Integer pid) {
+        private View makeItemView(String strTitle, String strText, String pid) {
             LayoutInflater inflater = (LayoutInflater)ToGo.this
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -149,7 +149,7 @@ public class ToGo extends Activity {
             title.setText(strTitle);
             TextView text = (TextView)itemView.findViewById(R.id.desc);
             text.setText(strText);
-            final int p = pid;
+            final String p = pid;
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

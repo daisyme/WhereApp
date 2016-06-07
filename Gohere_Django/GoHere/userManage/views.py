@@ -68,7 +68,7 @@ def user_detail(request, pk):
         user_info = UserInfoSerializer(user, data=req)
         if user_info.is_valid():
             user_info.save()
-            return Response("修改成功")
+            return Response(status=status.HTTP_200_OK)
         return JSONResponse(user_info.errors, status=status.HTTP_400_BAD_REQUEST)
 
 #创建用户
@@ -92,8 +92,8 @@ def user_list(request):
                 return HttpResponse(status=status.HTTP_409_CONFLICT)
             new_user = MyUser.objects.create_user(username,email,password)
             id = new_user.id
-            d_user =  data_user.objects.create(id=id,username=username)
-            return JSONResponse(status=status.HTTP_201_CREATED)
+            d_user =  data_user.objects.create(uid=id,username=username)
+            return Response(status=status.HTTP_201_CREATED)
 
 # 登录
 @api_view(['POST'])

@@ -11,4 +11,4 @@ class POISerializer(serializers.HyperlinkedModelSerializer):
 class POIInfo(serializers.ModelSerializer):
     class Meta:
         model = POI
-        fields = ('name', 'lat', 'lon', 'address', 'desc', 'checkinNum', 'checkinUserNum', 'likeNum', 'todoNum')
+        fields = ('pid','name', 'lat', 'lon', 'address', 'desc', 'checkinNum', 'checkinUserNum', 'likeNum', 'todoNum')

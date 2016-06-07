@@ -63,7 +63,7 @@ def user_history(request, pk):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        check = Check.objects.filter(uid=user.id)
+        check = Check.objects.filter(uid=user.uid)
         user_his = CheckSerializer(check, many=True)
         return JSONResponse(user_his.data, status=status.HTTP_200_OK)
     elif request.method == 'PUT':
@@ -79,7 +79,7 @@ def user_history(request, pk):
         myuser.doneNum += 1
         myuser.save()
         poi.checkinNum += 1
-        b = Check.objects.filter(uid_id=user.id)
+        b = Check.objects.filter(uid_id=user.uid)
         if(len(b) == 0):
             poi.checkinUserNum += 1
         poi.save()
@@ -98,21 +98,25 @@ def user_like(request, pk):
     except data_user.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
-
     if request.method == 'GET':
-        like = Like.objects.filter(uid=user.id)
-        user_like = LikeSerializer(user, many=True)
-        return JSONResponse(user_like.data, status=status.HTTP_200_OK)
+        like = Like.objects.filter(uid=user.uid)
+        #print like
+        poi = POI.objects.filter(pk=0)
+        for i in like:
+            #print i.pid_id
+            poi = POI.objects.filter(pk = i.pid_id) | poi
+        poi_like = POIInfo(poi, many=True)
+        return JSONResponse(poi_like.data, status=status.HTTP_200_OK)
     elif request.method == 'PUT':
         req=simplejson.loads(request.body)
         try:
             poi = POI.objects.get(pk=req['pid'])
         except POI.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
-        b = Like.objects.filter(uid=user.id).filter(pid=req['pid']).exists()
+        b = Like.objects.filter(uid=user.uid).filter(pid=req['pid']).exists()
         myuser = MyUser.objects.get(pk=pk)
         if(b):
-            nolike = Like.objects.filter(uid=user.id).get(pid=req['pid'])
+            nolike = Like.objects.filter(uid=user.uid).get(pid=req['pid'])
             nolike.delete()
             myuser.likeNum -= 1
             poi.likeNum -= 1
@@ -140,19 +144,24 @@ def user_todo(request, pk):
 
 
     if request.method == 'GET':
-        todo = Todo.objects.filter(uid=user.id)
-        user_todo = TodoSerializer(todo, many=True)
-        return JSONResponse(user_todo.data, status=status.HTTP_200_OK)
+        todo = Todo.objects.filter(uid=user.uid)
+        #print todo
+        poi = POI.objects.filter(pk=0)
+        for i in todo:
+            #print i.pid_id
+            poi = POI.objects.filter(pk = i.pid_id) | poi
+        poi_todo = POIInfo(poi, many=True)
+        return JSONResponse(poi_todo.data, status=status.HTTP_200_OK)
     elif request.method == 'PUT':
         req=simplejson.loads(request.body)
         try:
             poi = POI.objects.get(pk=req['pid'])
         except POI.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
-        b = Todo.objects.filter(uid=user.id).filter(pid=req['pid']).exists()
+        b = Todo.objects.filter(uid=user.uid).filter(pid=req['pid']).exists()
         myuser = MyUser.objects.get(pk=pk)
         if(b):
-            notodo = Todo.objects.filter(uid=user.id).get(pid=req['pid'])
+            notodo = Todo.objects.filter(uid=user.uid).get(pid=req['pid'])
             notodo.delete()
             myuser.todoNum -= 1
             poi.todoNum -= 1
@@ -172,6 +181,34 @@ def user_todo(request, pk):
 
 
 @api_view(['POST'])
+def poi_info(request, pk):
+    try:
+        user = data_user.objects.get(pk=pk)
+    except data_user.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    req=simplejson.loads(request.body)
+    try:
+        poi=POI.objects.get(pk=req['pid'])
+    except POI.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    a = Todo.objects.filter(uid=user.uid).filter(pid=req['pid']).exists()
+    b = Like.objects.filter(uid=user.uid).filter(pid=req['pid']).exists()
+    c = Check.objects.filter(uid=user.uid).filter(pid=req['pid']).exists()
+    dict = {}
+    dict["todo"] = a
+    dict["like"] = b
+    dict["check"] = c
+    dict["poi_name"] = poi.name
+    dict["address"] = poi.address
+    dict["checkinNum"] = poi.checkinNum
+    dict["checkinUserNum"] = poi.checkinUserNum
+    dict["likeNum"] = poi.likeNum
+    dict["todoNum"] = poi.todoNum
+    return JSONResponse(dict, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
 def recommend(request, pk):
     try:
         user = data_user.objects.get(pk=pk)
@@ -179,15 +216,15 @@ def recommend(request, pk):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     req=simplejson.loads(request.body)
-    lat=req['lat']
-    lon=req['lon']
+    lat=float(req['lat'])
+    lon=float(req['lon'])
     radius=req['radius']
 
-    rec = rec_poi(user, lat, lon, radius)
+    rec = rec_poi(user.uid, lat, lon, radius)
 
     poi = POI.objects.filter(pk=0)
     for i in rec:
-        poi = POI.objects.filter(pk = i[0]) | poi
+        poi = POI.objects.filter(pk = i) | poi
     poi_rec = POIInfo(poi, many=True)
     return JSONResponse(poi_rec.data, status=status.HTTP_200_OK)
 

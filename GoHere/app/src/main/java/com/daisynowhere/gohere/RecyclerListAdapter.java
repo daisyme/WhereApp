@@ -15,11 +15,10 @@ import java.util.List;
  */
 public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapter.ViewHolder> {
     private Context mContext;
-    private List<String> itemTiteles,itemTexts;
-    private List<Integer> itemPids;
+    private List<String> itemTiteles,itemTexts,itemPids;
     private int uid;
 
-    public RecyclerListAdapter(Context mContext,List<String> itemTitles, List<String> itemTexts, List<Integer> pids, int id) {
+    public RecyclerListAdapter(Context mContext,List<String> itemTitles, List<String> itemTexts, List<String> pids, int id) {
         this.mContext = mContext;
         this.itemTiteles=itemTitles;
         this.itemTexts=itemTexts;

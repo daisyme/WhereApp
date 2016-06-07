@@ -37,7 +37,7 @@ class POIViewSet(viewsets.ModelViewSet):
             ft = POI.objects.filter(title__contains=self.request.GET['search'])
         return ft.order_by('-pid')
 
-#显示//或更新新的地点信息
+#显示/地点信息
 @api_view(['GET'])
 def POI_detail(request, pk):
     try:

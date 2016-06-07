@@ -22,7 +22,7 @@ from django.conf import settings
 #data
 from userManage.views import UserViewSet, example_view, user_detail, user_list, user_login, user_logout
 from poisManage.views import POIViewSet, POI_detail
-from poisRecommend.views import CheckViewSet, d_userViewSet, user_history, user_like, user_todo, recommend
+from poisRecommend.views import CheckViewSet, d_userViewSet, user_history, user_like, user_todo, recommend,poi_info
 
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
@@ -43,7 +43,8 @@ urlpatterns = [
     url(r'^like/(?P<pk>.*)',user_like),
     url(r'^todo/(?P<pk>.*)',user_todo),
     url(r'^poi/(?P<pk>.*)', POI_detail),
-    url(r'^result/?P<pk>.*', recommend)
+    url(r'^result/(?P<pk>.*)', recommend),
+    url(r'^poi_info/(?P<pk>.*)', poi_info),
 
 ]
 urlpatterns += static('public/static', document_root=settings.STATIC_ROOT)
